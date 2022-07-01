@@ -29,6 +29,7 @@ use OCA\UserSQL\Properties;
 use OCA\UserSQL\Repository\GroupRepository;
 use OCP\Group\Backend\ABackend;
 use OCP\Group\Backend\ICountUsersBackend;
+use OCP\Group\Backend\INamedBackend;
 use OCP\Group\Backend\IGroupDetailsBackend;
 use OCP\Group\Backend\IIsAdminBackend;
 use OCP\ILogger;
@@ -40,6 +41,7 @@ use OCP\ILogger;
  */
 final class GroupBackend extends ABackend implements
     ICountUsersBackend,
+    INamedBackend,
     IGroupDetailsBackend,
     IIsAdminBackend
 {
@@ -84,6 +86,14 @@ final class GroupBackend extends ABackend implements
         $this->logger = $logger;
         $this->properties = $properties;
         $this->groupRepository = $groupRepository;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getBackendName(): string
+    {
+        return "User SQL";
     }
 
     /**
