@@ -253,6 +253,10 @@ class SettingsController extends Controller
                 $value = isset($reqValue) ? $reqValue : App::FALSE_VALUE;
                 $this->properties[$key] = $value;
 
+				if ($key == DB::PASSWORD) {
+					$value = '***';
+				}
+
                 $this->logger->info(
                     "Property '$key' has been set to: " . $value,
                     ["app" => $this->appName]
