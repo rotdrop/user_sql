@@ -62,18 +62,9 @@ class UserRepository
      */
     public function findByUid($uid)
     {
-        $query_result = $this->dataQuery->queryEntity(
+        return $this->dataQuery->queryEntity(
             Query::FIND_USER_BY_UID, User::class, [Query::UID_PARAM => $uid]
         );
-        if($query_result === null or $query_result === false){
-            $query_result = new User();
-            $query_result->uid = $uid;
-            $query_result->active = false;
-            $query_result->email = "";
-            $query_result->name = "Deleted User";
-            $query_result->username = "deleted";
-        }
-        return $query_result;
     }
 
     /**

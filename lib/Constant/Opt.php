@@ -48,4 +48,5 @@ final class Opt
     const REVERSE_ACTIVE = "opt.reverse_active";
     const SAFE_STORE = "opt.safe_store";
     const USE_CACHE = "opt.use_cache";
+    const PLACEHOLDER_USERS = "opt.placeholder_users";
 }

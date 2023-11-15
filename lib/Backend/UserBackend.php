@@ -264,6 +264,13 @@ final class UserBackend extends ABackend implements
             foreach ($this->actions as $action) {
                 $action->doAction($user);
             }
+        }elseif ($this->properties[Opt::PLACEHOLDER_USERS]){
+            $user = new User();
+            $user->uid = $uid;
+            $user->active = false;
+            $user->email = "";
+            $user->name = "Deleted User";
+            $user->username = "deleted";
         }
 
         return $user;
