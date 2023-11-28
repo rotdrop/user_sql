@@ -142,7 +142,9 @@ class UserRepository
      */
     public function countAll($search = "")
     {
-        return 499;
+        return $this->dataQuery->queryValue(
+            Query::COUNT_USERS, [Query::SEARCH_PARAM => $search]
+        );
     }
 
     /**
