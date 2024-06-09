@@ -112,7 +112,7 @@ class QueryProvider implements \ArrayAccess
         $reverseActiveOpt = $this->properties[Opt::REVERSE_ACTIVE];
 
         $groupColumns
-            = "g.$gGID AS gid, " .
+            = "CAST(g.$gGID as CHAR) AS gid, " .
             "g.$gName AS name, " .
             (empty($gAdmin) ? "false" : "g." . $gAdmin) . " AS admin";
         $userColumns
