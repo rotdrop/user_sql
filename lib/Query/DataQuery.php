@@ -154,6 +154,8 @@ class DataQuery
             "tablePrefix" => "",
             "driverOptions" => array()
         );
+        $parameters['primary'] = $parameters;
+        $parameters['replica'] = [$parameters];
 
         if ($this->properties[DB::DRIVER] == 'mysql') {
             if ($this->properties[DB::SSL_CA]) {
