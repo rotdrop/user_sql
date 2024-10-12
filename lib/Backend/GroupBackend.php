@@ -91,16 +91,16 @@ final class GroupBackend extends ABackend implements
         $this->properties = $properties;
         $this->groupRepository = $groupRepository;
     }
-    /**
-     * @inheritdoc
-     */
-    public function getBackendName(): string
-        {
-        return "User SQL";
-        }
 
 	/**
-    /**
+     * @inheritdoc
+     */
+	public function getBackendName(): string
+	{
+        return "User SQL";
+	}
+
+	/**
      * @inheritdoc
      */
     public function getGroups($search = "", $limit = null, $offset = null)
