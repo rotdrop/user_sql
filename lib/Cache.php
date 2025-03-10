@@ -26,7 +26,7 @@ use OCA\UserSQL\Constant\App;
 use OCA\UserSQL\Constant\Opt;
 use OCP\ICache;
 use OCP\IConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Used to store key-value pairs in the cache memory.
@@ -46,9 +46,9 @@ class Cache
      *
      * @param string  $AppName The application name.
      * @param IConfig $config  The config instance.
-     * @param ILogger $logger  The logger instance.
+     * @param LoggerInterface $logger  The logger instance.
      */
-    public function __construct($AppName, IConfig $config, ILogger $logger)
+    public function __construct($AppName, IConfig $config, LoggerInterface $logger)
     {
         $factory = \OC::$server->getMemCacheFactory();
         $useCache = $config->getAppValue(

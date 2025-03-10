@@ -27,7 +27,7 @@ use OCA\UserSQL\Model\User;
 use OCA\UserSQL\Properties;
 use OCA\UserSQL\Repository\UserRepository;
 use OCP\IConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Synchronizes the user name.
@@ -41,7 +41,7 @@ class NameSync implements IUserAction
      */
     private $appName;
     /**
-     * @var ILogger The logger instance.
+     * @var LoggerInterface The logger instance.
      */
     private $logger;
     /**
@@ -61,13 +61,13 @@ class NameSync implements IUserAction
      * The default constructor.
      *
      * @param string         $appName        The application name.
-     * @param ILogger        $logger         The logger instance.
+     * @param LoggerInterface $logger         The logger instance.
      * @param Properties     $properties     The properties array.
      * @param IConfig        $config         The config instance.
      * @param UserRepository $userRepository The user repository.
      */
     public function __construct(
-        $appName, ILogger $logger, Properties $properties, IConfig $config,
+        $appName, LoggerInterface $logger, Properties $properties, IConfig $config,
         UserRepository $userRepository
     ) {
         $this->appName = $appName;

@@ -27,5 +27,8 @@ try {
     $app = new Application();
     $app->registerBackends();
 } catch (QueryException $queryException) {
-    OC::$server->getLogger()->logException($queryException);
+	\OC::$server->query(Psr\Log\LoggerInterface::class)->error(
+		$queryException->getMessage(),
+		['exception' => $queryException]
+	);
 }
