@@ -33,7 +33,7 @@ use OCP\Group\Backend\IGroupDetailsBackend;
 use OCP\Group\Backend\IIsAdminBackend;
 use OCP\Group\Backend\ISearchableGroupBackend;
 use OCP\Group\Backend\INamedBackedn;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCP\IUserManager;
 
 use OC\User\LazyUser;
@@ -56,7 +56,7 @@ final class GroupBackend extends ABackend implements
      */
     private $appName;
     /**
-     * @var ILogger The logger instance.
+     * @var LoggerInterface The logger instance.
      */
     private $logger;
     /**
@@ -77,12 +77,12 @@ final class GroupBackend extends ABackend implements
      *
      * @param string          $AppName         The application name.
      * @param Cache           $cache           The cache instance.
-     * @param ILogger         $logger          The logger instance.
+     * @param LoggerInterface         $logger          The logger instance.
      * @param Properties      $properties      The properties array.
      * @param GroupRepository $groupRepository The group repository.
      */
     public function __construct(
-        $AppName, Cache $cache, ILogger $logger, Properties $properties,
+        $AppName, Cache $cache, LoggerInterface $logger, Properties $properties,
         GroupRepository $groupRepository
     ) {
         $this->appName = $AppName;

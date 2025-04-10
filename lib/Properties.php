@@ -25,7 +25,7 @@ use OCA\UserSQL\Constant\App;
 use OCA\UserSQL\Constant\DB;
 use OCA\UserSQL\Constant\Opt;
 use OCP\IConfig;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Store and retrieve application properties.
@@ -48,7 +48,7 @@ class Properties implements \ArrayAccess
      */
     private $config;
     /**
-     * @var ILogger The logger instance.
+     * @var LoggerInterface The logger instance.
      */
     private $logger;
     /**
@@ -69,11 +69,11 @@ class Properties implements \ArrayAccess
      *
      * @param string  $AppName The application name.
      * @param IConfig $config  The config instance.
-     * @param ILogger $logger  The logger instance.
+     * @param LoggerInterface $logger  The logger instance.
      * @param Cache   $cache   The cache instance.
      */
     public function __construct(
-        $AppName, IConfig $config, ILogger $logger, Cache $cache
+        $AppName, IConfig $config, LoggerInterface $logger, Cache $cache
     ) {
         $this->appName = $AppName;
         $this->config = $config;

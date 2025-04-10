@@ -28,7 +28,7 @@ use OC\DB\ConnectionFactory;
 use OCA\UserSQL\Constant\DB;
 use OCA\UserSQL\Constant\Query;
 use OCA\UserSQL\Properties;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Used to query a database.
@@ -42,7 +42,7 @@ class DataQuery
      */
     private $appName;
     /**
-     * @var ILogger The logger instance.
+     * @var LoggerInterface The logger instance.
      */
     private $logger;
     /**
@@ -62,12 +62,12 @@ class DataQuery
      * The class constructor.
      *
      * @param string        $AppName       The application name.
-     * @param ILogger       $logger        The logger instance.
+     * @param LoggerInterface       $logger        The logger instance.
      * @param Properties    $properties    The properties array.
      * @param QueryProvider $queryProvider The query provider.
      */
     public function __construct(
-        $AppName, ILogger $logger, Properties $properties,
+        $AppName, LoggerInterface $logger, Properties $properties,
         QueryProvider $queryProvider
     ) {
         $this->appName = $AppName;
