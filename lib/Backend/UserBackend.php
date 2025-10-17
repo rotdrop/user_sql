@@ -261,13 +261,13 @@ final class UserBackend extends ABackend implements
         if ($user instanceof User) {
             $this->cache->set($cacheKey, $user);
 
-			// avoid recursion as the action may very well call into the UserManager again ...
-			$actions = $this->actions;
-			$this->actions = [];
-            foreach ($this->actions as $action) {
+            // avoid recursion as the action may very well call into the UserManager again ...
+            $actions = $this->actions;
+            $this->actions = [];
+            foreach ($actions as $action) {
                 $action->doAction($user);
             }
-			$this->actions = $actions;
+            $this->actions = $actions;
         }
 
         return $user;
