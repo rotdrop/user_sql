@@ -63,11 +63,12 @@ class Application extends App implements IBootstrap
 			IGroupManager $groupManager,
 			Backend\GroupBackend $groupBackend,
 		) {
-			if (!$userBackend->isConfigured() || !$groupBackend->isConfigured()) {
-				return;
+			if ($userBackend->isConfigured()) {
+				$userManager->registerBackend($userBackend);
 			}
-			$userManager->registerBackend($userBackend);
-			$groupManager->addBackend($groupBackend);
+			if ($groupBackend->isConfigured()) {
+				$groupManager->addBackend($groupBackend);
+			}
 		});
 	}
 }
