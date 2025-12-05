@@ -4,6 +4,8 @@
  *
  * @copyright 2021 Marcin Łojewski <dev@mlojewski.me>
  * @author    Marcin Łojewski <dev@mlojewski.me>
+ * @copyright 2025 Claus-Justus Heine
+ * @author    Claus-Justus Heine <himself@claus-justus-heine.de>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,6 +22,8 @@
  */
 
 namespace OCA\UserSQL\Query;
+
+use UnexpectedValueException;
 
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Exception as DBALException;
@@ -150,6 +154,10 @@ class DataQuery
             "tablePrefix" => "",
             "driverOptions" => array()
         );
+
+        if (empty($this->properties[DB::DRIVER])) {
+          throw new UnexpectedValueException('Attempt to connect without configuration.');
+        }
 
         if ($this->properties[DB::DRIVER] == 'mysql') {
             if ($this->properties[DB::SSL_CA]) {
