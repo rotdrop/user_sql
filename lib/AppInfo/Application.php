@@ -2,10 +2,10 @@
 /**
  * Nextcloud - user_sql
  *
- * @copyright 2018 Marcin Łojewski <dev@mlojewski.me>
- * @author    Marcin Łojewski <dev@mlojewski.me>
  * @copyright 2025 Claus-Justus Heine <himself@claus-justus-heine.de>
  * @author    Claus-Justus Heine <himself@claus-justus-heine.de>
+ * @copyright 2018 Marcin Łojewski <dev@mlojewski.me>
+ * @author    Marcin Łojewski <dev@mlojewski.me>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
