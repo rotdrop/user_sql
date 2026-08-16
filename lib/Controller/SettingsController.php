@@ -26,6 +26,7 @@ use Exception;
 use OC\DatabaseException;
 use OC\DB\Connection;
 use OC\DB\ConnectionFactory;
+use OC\SystemConfig;
 use OCA\UserSQL\Cache;
 use OCA\UserSQL\Constant\App;
 use OCA\UserSQL\Constant\DB;
@@ -65,6 +66,10 @@ class SettingsController extends Controller
      * @var Cache The cache instance.
      */
     private $cache;
+    /**
+     * @var SystemConfig The system configuration provider.
+     */
+    private $systemConfig;
 
     /**
      * The default constructor.
@@ -78,7 +83,7 @@ class SettingsController extends Controller
      */
     public function __construct(
         $appName, IRequest $request, LoggerInterface $logger, IL10N $localization,
-        Properties $properties, Cache $cache
+        Properties $properties, Cache $cache, SystemConfig $systemConfig
     ) {
         parent::__construct($appName, $request);
         $this->appName = $appName;
@@ -86,6 +91,7 @@ class SettingsController extends Controller
         $this->localization = $localization;
         $this->properties = $properties;
         $this->cache = $cache;
+        $this->systemConfig = $systemConfig;
     }
 
     /**
@@ -157,7 +163,7 @@ class SettingsController extends Controller
         }
 
         $connectionFactory = new ConnectionFactory(
-            \OC::$server->getSystemConfig()
+            $this->systemConfig()
         );
 
         $parameters = [

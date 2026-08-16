@@ -29,6 +29,7 @@ use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Exception as DBALException;
 use OC\DB\Connection;
 use OC\DB\ConnectionFactory;
+use OC\SystemConfig;
 use OCA\UserSQL\Constant\DB;
 use OCA\UserSQL\Constant\Query;
 use OCA\UserSQL\Properties;
@@ -69,15 +70,17 @@ class DataQuery
      * @param LoggerInterface       $logger        The logger instance.
      * @param Properties    $properties    The properties array.
      * @param QueryProvider $queryProvider The query provider.
+     * @param SystemConfig  $systemConfig  The system configuration provider.
      */
     public function __construct(
         $AppName, LoggerInterface $logger, Properties $properties,
-        QueryProvider $queryProvider
+        QueryProvider $queryProvider, SystemConfig $systemConfig
     ) {
         $this->appName = $AppName;
         $this->logger = $logger;
         $this->properties = $properties;
         $this->queryProvider = $queryProvider;
+        $this->systemConfig = $systemConfig;
         $this->connection = false;
     }
 
@@ -98,10 +101,10 @@ class DataQuery
     /**
      * Run a given query and return the result.
      *
-     * @param string $queryName The query to execute.
-     * @param array  $params    The query parameters to bind.
-     * @param int    $limit     Results limit. Defaults to -1 (no limit).
-     * @param int    $offset    Results offset. Defaults to 0.
+     * @param string       $queryName    The query to execute.
+     * @param array        $params       The query parameters to bind.
+     * @param int          $limit        Results limit. Defaults to -1 (no limit).
+     * @param int          $offset       Results offset. Defaults to 0.
      *
      * @return Statement|bool Result of query or FALSE on failure.
      */
@@ -142,9 +145,7 @@ class DataQuery
      */
     private function connectToDatabase()
     {
-        $connectionFactory = new ConnectionFactory(
-            \OC::$server->getSystemConfig()
-        );
+        $connectionFactory = new ConnectionFactory($this->systemConfig);
 
         $parameters = array(
             "host" => $this->properties[DB::HOSTNAME],
@@ -184,10 +185,10 @@ class DataQuery
      * Fetch a value from the first row and the first column which
      * the given query returns. Empty result set is consider to be a failure.
      *
-     * @param string $queryName The query to execute.
-     * @param array  $params    The query parameters to bind.
-     * @param bool   $failure   Value returned on database query failure.
-     *                          Defaults to FALSE.
+     * @param string       $queryName    The query to execute.
+     * @param array        $params       The query parameters to bind.
+     * @param bool         $failure      Value returned on database query failure.
+     *                                   Defaults to FALSE.
      *
      * @return array|bool Queried value or $failure value on failure.
      */

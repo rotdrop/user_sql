@@ -72,6 +72,10 @@ final class GroupBackend extends ABackend implements
      * @var Properties The properties array.
      */
     private $properties;
+    /**
+     * @var IUserManager The user manager provider
+     */
+    private $userManager;
 
     /**
      * The default constructor.
@@ -81,16 +85,18 @@ final class GroupBackend extends ABackend implements
      * @param LoggerInterface         $logger          The logger instance.
      * @param Properties      $properties      The properties array.
      * @param GroupRepository $groupRepository The group repository.
+     * @param IUserManager    $userManager     The user manager provider.
      */
     public function __construct(
         $AppName, Cache $cache, LoggerInterface $logger, Properties $properties,
-        GroupRepository $groupRepository
+        GroupRepository $groupRepository, IUserManager $userManager
     ) {
         $this->appName = $AppName;
         $this->cache = $cache;
         $this->logger = $logger;
         $this->properties = $properties;
         $this->groupRepository = $groupRepository;
+        $this->userManager = $userManager;
     }
 
 	/**
@@ -434,9 +440,8 @@ final class GroupBackend extends ABackend implements
         }
 
 		$users = [];
-		$userManager = \OCP\Server::get(IUserManager::class);
 		foreach ($names as $uid => $name) {
-			$users[$uid] = new LazyUser($uid, $userManager, $name);
+			$users[$uid] = new LazyUser($uid, $this->userManager, $name);
 		}
 
 		return $users;

@@ -27,6 +27,7 @@ use OCA\UserSQL\Model\User;
 use OCA\UserSQL\Properties;
 use OCA\UserSQL\Repository\UserRepository;
 use OCP\IConfig;
+use OCP\IUserManager;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -56,6 +57,10 @@ class EmailSync implements IUserAction
      * @var UserRepository The user repository.
      */
     private $userRepository;
+    /**
+     * @var IUserManager The user manager object.
+     */
+    private $userManager;
 
     /**
      * The default constructor.
@@ -68,13 +73,14 @@ class EmailSync implements IUserAction
      */
     public function __construct(
         $appName, LoggerInterface $logger, Properties $properties, IConfig $config,
-        UserRepository $userRepository
+        UserRepository $userRepository, IUserManager $userManager
     ) {
         $this->appName = $appName;
         $this->logger = $logger;
         $this->properties = $properties;
         $this->config = $config;
         $this->userRepository = $userRepository;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -104,7 +110,7 @@ class EmailSync implements IUserAction
                 $this->config->setUserValue(
                     $user->uid, "settings", "email", $user->email
                 );
-                \OC::$server->getUserManager()->get($user->uid)->setEMailAddress($user->email);
+                $this->userManager->get($user->uid)->setEMailAddress($user->email);
             }
 
             $result = true;
@@ -126,7 +132,7 @@ class EmailSync implements IUserAction
                 $this->config->setUserValue(
                     $user->uid, "settings", "email", $user->email
                 );
-                \OC::$server->getUserManager()->get($user->uid)->setEMailAddress($user->email);
+                $this->userManager->get($user->uid)->setEMailAddress($user->email);
             }
 
             $result = true;

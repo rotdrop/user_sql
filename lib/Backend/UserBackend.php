@@ -37,6 +37,7 @@ use OCA\UserSQL\Repository\UserRepository;
 use OCP\EventDispatcher\IEventDispatcher;
 use OCP\IConfig;
 use OCP\IL10N;
+use OCP\IUserManager;
 use Psr\Log\LoggerInterface;
 use OCP\Security\Events\ValidatePasswordPolicyEvent;
 use OCP\User\Backend\ABackend;
@@ -100,6 +101,10 @@ final class UserBackend extends ABackend implements
      * @var IUserAction[] The actions to execute.
      */
     private $actions;
+    /**
+     * @var IUserManager The user manager object.
+     */
+    private $userManager;
 
     /**
      * The default constructor.
@@ -112,11 +117,12 @@ final class UserBackend extends ABackend implements
      * @param IL10N            $localization    The localization service.
      * @param IConfig          $config          The config instance.
      * @param IEventDispatcher $eventDispatcher The event dispatcher.
+     * @param IUserManager     $userManager     The user manager provider.
      */
     public function __construct(
         $AppName, Cache $cache, LoggerInterface $logger, Properties $properties,
         UserRepository $userRepository, IL10N $localization, IConfig $config,
-        IEventDispatcher $eventDispatcher
+        IEventDispatcher $eventDispatcher, IUserManager $userManager
     ) {
         $this->appName = $AppName;
         $this->cache = $cache;
@@ -126,6 +132,7 @@ final class UserBackend extends ABackend implements
         $this->localization = $localization;
         $this->config = $config;
         $this->eventDispatcher = $eventDispatcher;
+        $this->userManager = $userManager;
         $this->actions = [];
 
         $this->initActions();
@@ -141,7 +148,7 @@ final class UserBackend extends ABackend implements
         ) {
             $this->actions[] = new EmailSync(
                 $this->appName, $this->logger, $this->properties, $this->config,
-                $this->userRepository
+                $this->userRepository, $this->userManager
             );
         }
         if (!empty($this->properties[Opt::QUOTA_SYNC])
@@ -157,7 +164,7 @@ final class UserBackend extends ABackend implements
         ) {
             $this->actions[] = new NameSync(
                 $this->appName, $this->logger, $this->properties, $this->config,
-                $this->userRepository
+                $this->userRepository, $this->userManager
             );
         }
     }

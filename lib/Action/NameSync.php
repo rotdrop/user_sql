@@ -27,6 +27,7 @@ use OCA\UserSQL\Model\User;
 use OCA\UserSQL\Properties;
 use OCA\UserSQL\Repository\UserRepository;
 use OCP\IConfig;
+use OCP\IUserManager;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -56,6 +57,10 @@ class NameSync implements IUserAction
      * @var UserRepository The user repository.
      */
     private $userRepository;
+    /**
+     * @var IUserManager The user manager provider.
+     */
+    private $userManager;
 
     /**
      * The default constructor.
@@ -65,16 +70,18 @@ class NameSync implements IUserAction
      * @param Properties     $properties     The properties array.
      * @param IConfig        $config         The config instance.
      * @param UserRepository $userRepository The user repository.
+     * @param IUserManager   $userManager    The user manager provider.
      */
     public function __construct(
         $appName, LoggerInterface $logger, Properties $properties, IConfig $config,
-        UserRepository $userRepository
+        UserRepository $userRepository, IUserManager $userManager
     ) {
         $this->appName = $appName;
         $this->logger = $logger;
         $this->properties = $properties;
         $this->config = $config;
         $this->userRepository = $userRepository;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -99,7 +106,7 @@ class NameSync implements IUserAction
                 $this->config->setUserValue(
                     $user->uid, "settings", "displayName", $user->name
                 );
-                \OC::$server->getUserManager()->get($user->uid)->setDisplayName($user->name);
+                $this->userManager->get($user->uid)->setDisplayName($user->name);
             }
 
             $result = true;
@@ -121,7 +128,7 @@ class NameSync implements IUserAction
                 $this->config->setUserValue(
                     $user->uid, "settings", "displayName", $user->name
                 );
-                \OC::$server->getUserManager()->get($user->uid)->setDisplayName($user->name);
+                $this->userManager->get($user->uid)->setDisplayName($user->name);
             }
 
             $result = true;
