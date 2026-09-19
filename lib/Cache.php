@@ -53,7 +53,7 @@ class Cache
      */
     public function __construct($AppName, IConfig $config, LoggerInterface $logger)
     {
-        $factory = \OC::$server->getMemCacheFactory();
+        $factory = \OC::$server->get(\OC\Memcache\Factory::class);
         $useCache = $config->getAppValue(
             $AppName, Opt::USE_CACHE, App::FALSE_VALUE
         );

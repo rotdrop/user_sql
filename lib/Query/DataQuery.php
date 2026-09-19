@@ -2,7 +2,7 @@
 /**
  * Nextcloud - user_sql
  *
- * @copyright 2021 Marcin Łojewski <dev@mlojewski.me>
+ * @copyright 2021, 2026 Marcin Łojewski <dev@mlojewski.me>
  * @author    Marcin Łojewski <dev@mlojewski.me>
  * @copyright 2025 Claus-Justus Heine
  * @author    Claus-Justus Heine <himself@claus-justus-heine.de>
@@ -143,7 +143,7 @@ class DataQuery
     private function connectToDatabase()
     {
         $connectionFactory = new ConnectionFactory(
-            \OC::$server->getSystemConfig()
+            \OC::$server->get(\OC\SystemConfig::class),
         );
 
         $parameters = array(

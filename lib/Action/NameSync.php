@@ -99,7 +99,7 @@ class NameSync implements IUserAction
                 $this->config->setUserValue(
                     $user->uid, "settings", "displayName", $user->name
                 );
-                \OC::$server->getUserManager()->get($user->uid)->setDisplayName($user->name);
+                \OCP\Server::get(\OCP\IUserManager::class)->get($user->uid)->setDisplayName($user->name);
             }
 
             $result = true;
@@ -121,7 +121,7 @@ class NameSync implements IUserAction
                 $this->config->setUserValue(
                     $user->uid, "settings", "displayName", $user->name
                 );
-                \OC::$server->getUserManager()->get($user->uid)->setDisplayName($user->name);
+                \OCP\Server::get(\OCP\IUserManager::class)->get($user->uid)->setDisplayName($user->name);
             }
 
             $result = true;
